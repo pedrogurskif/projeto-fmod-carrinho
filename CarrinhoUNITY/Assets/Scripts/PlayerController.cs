@@ -7,10 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     private float speed = 20f;
     private float turnSpeed = 75f;
-    public InputActionAsset inputActions;
-    public InputAction moveAction;
-    private float horizontalInput;
-    private float verticalInput;
+    [SerializeField] private InputActionAsset inputActions;
+    private InputAction moveAction;
+    private Vector2 playerInput;
 
     void Start()
     {
@@ -19,9 +18,8 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        float horizontalInput = moveAction.ReadValue<Vector2>().x;
-        float verticalInput = moveAction.ReadValue<Vector2>().y;
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+        playerInput = moveAction.ReadValue<Vector2>();
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * playerInput.y);
+        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * playerInput.x);
     }
 }
